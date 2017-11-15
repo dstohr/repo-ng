@@ -51,8 +51,8 @@ parseConfig(const std::string& configPath)
   for (const auto& section : dataConf) {
     if (section.first == "prefix")
       repoConfig.dataPrefixes.push_back(Name(section.second.get_value<std::string>()));
-    else if (section.first == "registration-subset")
-      repoConfig.registrationSubset = section.second.get_value<int>();
+    //else if (section.first == "registration-subset")
+      //repoConfig.registrationSubset = section.second.get_value<int>();
     else
       throw Repo::Error("Unrecognized option in 'data' section in "
                         "configuration file '"+ configPath +"'");
