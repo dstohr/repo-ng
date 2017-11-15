@@ -21,3 +21,4 @@ build/
 *.db*
 
 .tags*
+.vscode/tags
