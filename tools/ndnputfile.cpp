@@ -33,6 +33,9 @@
 #include <boost/asio.hpp>
 #include <boost/iostreams/operations.hpp>
 #include <boost/iostreams/read.hpp>
+#define BOOST_THREAD_PROVIDES_FUTURE
+#include <boost/thread.hpp>
+#include <boost/thread/future.hpp>
 
 namespace repo {
 
@@ -44,7 +47,7 @@ using std::bind;
 using std::placeholders::_1;
 using std::placeholders::_2;
 
-static const uint64_t DEFAULT_BLOCK_SIZE = 1000*5;
+static const uint64_t DEFAULT_BLOCK_SIZE = 1000*10;
 static const uint64_t DEFAULT_INTEREST_LIFETIME = 4000;
 static const uint64_t DEFAULT_FRESHNESS_PERIOD = 10000;
 static const uint64_t DEFAULT_CHECK_PERIOD = 1000;
@@ -200,7 +203,7 @@ NdnPutFile::prepareNextData(uint64_t referenceSegmentNo)
 
     data->setContent(buffer, readSize);
     data->setFreshnessPeriod(freshnessPeriod);
-    signData(*data);
+    boost::async(signData(*data));
 
     m_data.insert(std::make_pair(m_currentSegmentNo, data));
 
