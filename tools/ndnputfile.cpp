@@ -204,8 +204,8 @@ NdnPutFile::prepareNextData(uint64_t referenceSegmentNo)
     }
     data->setContent(buffer, readSize);
     data->setFreshnessPeriod(freshnessPeriod);
-    boost::thread* thr = new boost::thread(&NdnPutFile::createAndInsertData, this, data, m_currentSegmentNo);
-    //createAndInsertData( data, m_currentSegmentNo);
+    //boost::thread* thr = new boost::thread(&NdnPutFile::createAndInsertData, this, data, m_currentSegmentNo);
+    createAndInsertData( data, m_currentSegmentNo);
     ++m_currentSegmentNo;
   }
 }
