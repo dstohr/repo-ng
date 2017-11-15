@@ -203,10 +203,8 @@ NdnPutFile::prepareNextData(uint64_t referenceSegmentNo)
 
     data->setContent(buffer, readSize);
     data->setFreshnessPeriod(freshnessPeriod);
-    //boost::async(signData(*data));
-
+    signData(*data);
     m_data.insert(std::make_pair(m_currentSegmentNo, data));
-
     ++m_currentSegmentNo;
   }
 }
@@ -346,7 +344,7 @@ NdnPutFile::onSingleInterest(const ndn::Name& prefix, const ndn::Interest& inter
   shared_ptr<ndn::Data> data = make_shared<ndn::Data>(m_dataPrefix);
   data->setContent(buffer, readSize);
   data->setFreshnessPeriod(freshnessPeriod);
-  //signData(*data);
+  signData(*data);
   m_face.put(*data);
 
   m_isFinished = true;
