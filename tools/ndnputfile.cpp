@@ -33,9 +33,8 @@
 #include <boost/asio.hpp>
 #include <boost/iostreams/operations.hpp>
 #include <boost/iostreams/read.hpp>
-#define BOOST_THREAD_PROVIDES_FUTURE
 #include <boost/thread.hpp>
-#include <boost/thread/future.hpp>
+#include <boost/bind.hpp>
 
 namespace repo {
 
@@ -47,11 +46,11 @@ using std::bind;
 using std::placeholders::_1;
 using std::placeholders::_2;
 
-static const uint64_t DEFAULT_BLOCK_SIZE = 1000*10;
+static const uint64_t DEFAULT_BLOCK_SIZE = 1000*1;
 static const uint64_t DEFAULT_INTEREST_LIFETIME = 4000;
 static const uint64_t DEFAULT_FRESHNESS_PERIOD = 10000;
 static const uint64_t DEFAULT_CHECK_PERIOD = 1000;
-static const size_t PRE_SIGN_DATA_COUNT = 11*5;
+static const size_t PRE_SIGN_DATA_COUNT = 11*1;
 
 class NdnPutFile : ndn::noncopyable
 {
@@ -91,6 +90,9 @@ public:
 private:
   void
   prepareNextData(uint64_t referenceSegmentNo);
+
+  void
+  createAndInsertData(shared_ptr<ndn::Data> data, int m_currentSegmentNo);
 
   void
   startInsertCommand();
@@ -200,14 +202,21 @@ NdnPutFile::prepareNextData(uint64_t referenceSegmentNo)
       data->setFinalBlockId(ndn::name::Component::fromSegment(m_currentSegmentNo));
       m_isFinished = true;
     }
-
     data->setContent(buffer, readSize);
     data->setFreshnessPeriod(freshnessPeriod);
-    signData(*data);
-    m_data.insert(std::make_pair(m_currentSegmentNo, data));
+    boost::thread* thr = new boost::thread(&NdnPutFile::createAndInsertData, this, data, m_currentSegmentNo);
+    //createAndInsertData( data, m_currentSegmentNo);
     ++m_currentSegmentNo;
   }
 }
+
+void 
+NdnPutFile::createAndInsertData(shared_ptr<ndn::Data> data, int m_currentSegmentNo)
+{
+   signData(*data);
+   m_data.insert(std::make_pair(m_currentSegmentNo, data));
+}
+
 
 void
 NdnPutFile::run()

@@ -32,7 +32,7 @@ def configure(conf):
     conf.env['WITH_TOOLS'] = conf.options.with_tools
     conf.env['WITH_EXAMPLES'] = conf.options.with_examples
 
-    USED_BOOST_LIBS = ['system', 'iostreams', 'filesystem', 'random']
+    USED_BOOST_LIBS = ['system', 'iostreams', 'filesystem', 'random', 'thread']
     if conf.env['WITH_TESTS']:
         USED_BOOST_LIBS += ['unit_test_framework']
     conf.check_boost(lib=USED_BOOST_LIBS, mandatory=True)
@@ -63,7 +63,7 @@ def build(bld):
     bld(target="ndn-repo-ng",
         features=["cxx", "cxxprogram"],
         source=bld.path.ant_glob(['src/main.cpp']),
-        use='ndn-repo-objects',
+        use='ndn-repo-objects BOOST',
         )
 
     # Tests
