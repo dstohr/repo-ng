@@ -54,7 +54,7 @@ parseConfig(const std::string& configPath)
     else if (section.first == "registration-subset")
       repoConfig.registrationSubset = section.second.get_value<int>();
     else
-      throw Repo::Error("Unrecognized '" + it->first + "' option in 'data' section in "
+      throw Repo::Error("Unrecognized option in 'data' section in "
                         "configuration file '"+ configPath +"'");
   }
 
@@ -63,7 +63,7 @@ parseConfig(const std::string& configPath)
     if (section.first == "prefix")
       repoConfig.repoPrefixes.push_back(Name(section.second.get_value<std::string>()));
     else
-      throw Repo::Error("Unrecognized '" + it->first + "' option in 'command' section in "
+      throw Repo::Error("Unrecognized option in 'command' section in "
                         "configuration file '"+ configPath +"'");
   }
 
