@@ -46,7 +46,7 @@ RepoStorage::insertData(const Data& data)
 {
    bool isExist = m_index.hasData(data);
    if (isExist)
-     throw Error("The Entry Has Already In the Skiplist. Cannot be Inserted!");
+     BOOST_THROW_EXCEPTION(Error("The Entry is already in the skiplist. Cannot be inserted!"));
    int64_t id = m_storage.insert(data);
    if (id == -1)
      return false;
