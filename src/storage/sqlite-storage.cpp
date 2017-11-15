@@ -81,6 +81,8 @@ SqliteStorage::initializeRepo()
   }
   sqlite3_exec(m_db, "PRAGMA synchronous = OFF", 0, 0, &errMsg);
   sqlite3_exec(m_db, "PRAGMA journal_mode = WAL", 0, 0, &errMsg);
+  sqlite3_exec(m_db, "PRAGMA schema.cache_size = 50000", 0, 0, &errMsg);
+  sqlite3_exec(m_db, "PRAGMA temp_store = MEMORY", NULL, NULL, &sErrMsg);
 }
 
 SqliteStorage::~SqliteStorage()
