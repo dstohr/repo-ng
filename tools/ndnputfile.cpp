@@ -44,7 +44,7 @@ using std::bind;
 using std::placeholders::_1;
 using std::placeholders::_2;
 
-static const uint64_t DEFAULT_BLOCK_SIZE = 1000;
+static const uint64_t DEFAULT_BLOCK_SIZE = 8000;
 static const uint64_t DEFAULT_INTEREST_LIFETIME = 4000;
 static const uint64_t DEFAULT_FRESHNESS_PERIOD = 10000;
 static const uint64_t DEFAULT_CHECK_PERIOD = 1000;
