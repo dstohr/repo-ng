@@ -48,7 +48,7 @@ static const uint64_t DEFAULT_BLOCK_SIZE = 8000*3;
 static const uint64_t DEFAULT_INTEREST_LIFETIME = 4000;
 static const uint64_t DEFAULT_FRESHNESS_PERIOD = 10000;
 static const uint64_t DEFAULT_CHECK_PERIOD = 1000;
-static const size_t PRE_SIGN_DATA_COUNT = 11*10;
+static const size_t PRE_SIGN_DATA_COUNT = 11;
 
 class NdnPutFile : ndn::noncopyable
 {
